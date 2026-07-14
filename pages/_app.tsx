@@ -1,0 +1,1 @@
+import type { AppProps } from 'next/app'\nimport '../styles/globals.css'\n\nexport default function App({ Component, pageProps }: AppProps) {\n  return <Component {...pageProps} />\n}\n
