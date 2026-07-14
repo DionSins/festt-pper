@@ -1,0 +1,1 @@
+export default function Home() {\n  return (\n    <main style={{ padding: '20px', textAlign: 'center' }}>\n      <h1>Festaepper - Mediterranean Carpet Rental</h1>\n      <p>Welcome to our carpet rental service!</p>\n      <p>This is a test page to verify deployment.</p>\n    </main>\n  )\n}\n
