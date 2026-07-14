@@ -1,1 +1,178 @@
-'use client'\n\nimport { carpets } from '@/data/carpets'\nimport Image from 'next/image'\n\nexport default function CarpetCatalog() {\n  // Group carpets by name\n  const carpetGroups = carpets.reduce((acc, carpet) => {\n    const key = carpet.name\n    if (!acc[key]) {\n      acc[key] = []\n    }\n    acc[key].push(carpet)\n    return acc\n  }, {} as Record<string, typeof carpets>)\n\n  return (\n    <section id=\"catalog\" style={styles.section}>\n      <div style={styles.container}>\n        <h2 style={styles.heading}>Our Mediterranean Carpets</h2>\n        <p style={styles.description}>\n          Each carpet is carefully selected to bring the warmth and beauty of the Mediterranean to your event.\n        </p>\n\n        <div style={styles.catalogGrid}>\n          {Object.entries(carpetGroups).map(([name, group]) => {\n            // Get the image URL based on carpet name\n            let imageUrl = ''\n            if (name === 'Crimson Dream') {\n              imageUrl = 'https://images.unsplash.com/photo-1565182999555-9203341cdc98?w=500&h=400&fit=crop'\n            } else if (name === 'Azure Elegance') {\n              imageUrl = 'https://images.unsplash.com/photo-1577720643272-265e434ff562?w=500&h=400&fit=crop'\n            } else if (name === 'Desert Oasis') {\n              imageUrl = 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=500&h=400&fit=crop'\n            }\n\n            return (\n              <div key={name} style={styles.carpetCard}>\n                <div style={styles.imageWrapper}>\n                  <img\n                    src={imageUrl}\n                    alt={name}\n                    style={styles.carpetImage}\n                  />\n                </div>\n\n                <div style={styles.carpetHeader}>\n                  <h3 style={styles.carpetName}>{name}</h3>\n                  <p style={styles.carpetPattern}>{group[0].pattern}</p>\n                </div>\n\n                <p style={styles.carpetDescription}>{group[0].description}</p>\n\n                <div style={styles.sizeOptions}>\n                  {group.map((carpet) => (\n                    <div key={carpet.id} style={styles.sizeOption}>\n                      <span style={styles.sizeLabel}>{carpet.size.charAt(0).toUpperCase() + carpet.size.slice(1)}</span>\n                      <span style={styles.sizePrice}>kr. {carpet.price}</span>\n                    </div>\n                  ))}\n                </div>\n\n                <button style={styles.inquireBtn}>Inquire Now</button>\n              </div>\n            )\n          })}\n        </div>\n      </div>\n    </section>\n  )\n}\n\nconst styles = {\n  section: {\n    padding: '4rem 1rem',\n    background: 'white',\n  } as React.CSSProperties,\n  container: {\n    maxWidth: '1200px',\n    margin: '0 auto',\n  } as React.CSSProperties,\n  heading: {\n    fontSize: '2.5rem',\n    color: '#c41e3a',\n    marginBottom: '1rem',\n    textAlign: 'center',\n  } as React.CSSProperties,\n  description: {\n    fontSize: '1.1rem',\n    color: '#666',\n    textAlign: 'center',\n    marginBottom: '3rem',\n    maxWidth: '600px',\n    margin: '0 auto 3rem',\n  } as React.CSSProperties,\n  catalogGrid: {\n    display: 'grid',\n    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',\n    gap: '2rem',\n  } as React.CSSProperties,\n  carpetCard: {\n    border: '2px solid #d4a574',\n    borderRadius: '8px',\n    padding: '0',\n    background: '#fafafa',\n    transition: 'transform 0.3s, box-shadow 0.3s',\n    cursor: 'pointer',\n    overflow: 'hidden',\n    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',\n  } as React.CSSProperties,\n  imageWrapper: {\n    width: '100%',\n    height: '250px',\n    overflow: 'hidden',\n    background: '#e0e0e0',\n  } as React.CSSProperties,\n  carpetImage: {\n    width: '100%',\n    height: '100%',\n    objectFit: 'cover',\n  } as React.CSSProperties,\n  carpetHeader: {\n    marginBottom: '0.5rem',\n    padding: '1.5rem 1.5rem 0 1.5rem',\n  } as React.CSSProperties,\n  carpetName: {\n    fontSize: '1.5rem',\n    color: '#c41e3a',\n    margin: '0 0 0.5rem 0',\n  } as React.CSSProperties,\n  carpetPattern: {\n    fontSize: '0.9rem',\n    color: '#8b6f47',\n    margin: 0,\n    fontStyle: 'italic',\n  } as React.CSSProperties,\n  carpetDescription: {\n    color: '#555',\n    fontSize: '0.95rem',\n    marginBottom: '1rem',\n    lineHeight: '1.5',\n    padding: '0 1.5rem',\n  } as React.CSSProperties,\n  sizeOptions: {\n    display: 'grid',\n    gap: '0.5rem',\n    marginBottom: '1.5rem',\n    padding: '0 1.5rem',\n  } as React.CSSProperties,\n  sizeOption: {\n    display: 'flex',\n    justifyContent: 'space-between',\n    padding: '0.75rem',\n    background: 'white',\n    borderRadius: '4px',\n    border: '1px solid #e0e0e0',\n  } as React.CSSProperties,\n  sizeLabel: {\n    fontWeight: '600',\n    color: '#333',\n  } as React.CSSProperties,\n  sizePrice: {\n    color: '#c41e3a',\n    fontWeight: 'bold',\n  } as React.CSSProperties,\n  inquireBtn: {\n    width: 'calc(100% - 3rem)',\n    margin: '0 1.5rem 1.5rem 1.5rem',\n    padding: '0.75rem',\n    background: '#c41e3a',\n    color: 'white',\n    border: 'none',\n    borderRadius: '4px',\n    fontSize: '1rem',\n    fontWeight: '600',\n    transition: 'background 0.3s',\n    cursor: 'pointer',\n  } as React.CSSProperties,\n}\n
+'use client'
+
+import { carpets } from '@/data/carpets'
+
+export default function CarpetCatalog() {
+  // Group carpets by name
+  const carpetGroups = carpets.reduce((acc, carpet) => {
+    const key = carpet.name
+    if (!acc[key]) {
+      acc[key] = []
+    }
+    acc[key].push(carpet)
+    return acc
+  }, {} as Record<string, typeof carpets>)
+
+  return (
+    <section id="catalog" style={styles.section}>
+      <div style={styles.container}>
+        <h2 style={styles.heading}>Our Mediterranean Carpets</h2>
+        <p style={styles.description}>
+          Each carpet is carefully selected to bring the warmth and beauty of the Mediterranean to your event.
+        </p>
+
+        <div style={styles.catalogGrid}>
+          {Object.entries(carpetGroups).map(([name, group]) => {
+            // Get the image URL based on carpet name
+            let imageUrl = ''
+            if (name === 'Crimson Dream') {
+              imageUrl = 'https://images.unsplash.com/photo-1565182999555-9203341cdc98?w=500&h=400&fit=crop'
+            } else if (name === 'Azure Elegance') {
+              imageUrl = 'https://images.unsplash.com/photo-1577720643272-265e434ff562?w=500&h=400&fit=crop'
+            } else if (name === 'Desert Oasis') {
+              imageUrl = 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=500&h=400&fit=crop'
+            }
+
+            return (
+              <div key={name} style={styles.carpetCard}>
+                <div style={styles.imageWrapper}>
+                  <img
+                    src={imageUrl}
+                    alt={name}
+                    style={styles.carpetImage}
+                  />
+                </div>
+
+                <div style={styles.carpetHeader}>
+                  <h3 style={styles.carpetName}>{name}</h3>
+                  <p style={styles.carpetPattern}>{group[0].pattern}</p>
+                </div>
+
+                <p style={styles.carpetDescription}>{group[0].description}</p>
+
+                <div style={styles.sizeOptions}>
+                  {group.map((carpet) => (
+                    <div key={carpet.id} style={styles.sizeOption}>
+                      <span style={styles.sizeLabel}>{carpet.size.charAt(0).toUpperCase() + carpet.size.slice(1)}</span>
+                      <span style={styles.sizePrice}>kr. {carpet.price}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <button style={styles.inquireBtn}>Inquire Now</button>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const styles = {
+  section: {
+    padding: '4rem 1rem',
+    background: 'white',
+  } as React.CSSProperties,
+  container: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+  } as React.CSSProperties,
+  heading: {
+    fontSize: '2.5rem',
+    color: '#c41e3a',
+    marginBottom: '1rem',
+    textAlign: 'center',
+  } as React.CSSProperties,
+  description: {
+    fontSize: '1.1rem',
+    color: '#666',
+    textAlign: 'center',
+    marginBottom: '3rem',
+    maxWidth: '600px',
+    margin: '0 auto 3rem',
+  } as React.CSSProperties,
+  catalogGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '2rem',
+  } as React.CSSProperties,
+  carpetCard: {
+    border: '2px solid #d4a574',
+    borderRadius: '8px',
+    padding: '0',
+    background: '#fafafa',
+    transition: 'transform 0.3s, box-shadow 0.3s',
+    cursor: 'pointer',
+    overflow: 'hidden',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+  } as React.CSSProperties,
+  imageWrapper: {
+    width: '100%',
+    height: '250px',
+    overflow: 'hidden',
+    background: '#e0e0e0',
+  } as React.CSSProperties,
+  carpetImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  } as React.CSSProperties,
+  carpetHeader: {
+    marginBottom: '0.5rem',
+    padding: '1.5rem 1.5rem 0 1.5rem',
+  } as React.CSSProperties,
+  carpetName: {
+    fontSize: '1.5rem',
+    color: '#c41e3a',
+    margin: '0 0 0.5rem 0',
+  } as React.CSSProperties,
+  carpetPattern: {
+    fontSize: '0.9rem',
+    color: '#8b6f47',
+    margin: 0,
+    fontStyle: 'italic',
+  } as React.CSSProperties,
+  carpetDescription: {
+    color: '#555',
+    fontSize: '0.95rem',
+    marginBottom: '1rem',
+    lineHeight: '1.5',
+    padding: '0 1.5rem',
+  } as React.CSSProperties,
+  sizeOptions: {
+    display: 'grid',
+    gap: '0.5rem',
+    marginBottom: '1.5rem',
+    padding: '0 1.5rem',
+  } as React.CSSProperties,
+  sizeOption: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '0.75rem',
+    background: 'white',
+    borderRadius: '4px',
+    border: '1px solid #e0e0e0',
+  } as React.CSSProperties,
+  sizeLabel: {
+    fontWeight: '600',
+    color: '#333',
+  } as React.CSSProperties,
+  sizePrice: {
+    color: '#c41e3a',
+    fontWeight: 'bold',
+  } as React.CSSProperties,
+  inquireBtn: {
+    width: 'calc(100% - 3rem)',
+    margin: '0 1.5rem 1.5rem 1.5rem',
+    padding: '0.75rem',
+    background: '#c41e3a',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    fontSize: '1rem',
+    fontWeight: '600',
+    transition: 'background 0.3s',
+    cursor: 'pointer',
+  } as React.CSSProperties,
+}

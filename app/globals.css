@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #f5f1e8 0%, #e8dcc8 100%);
+  color: #333;
+  min-height: 100vh;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* Mediterranean color palette */
+:root {
+  --primary: #c41e3a;        /* Mediterranean red */
+  --secondary: #d4a574;      /* Warm tan */
+  --accent: #8b6f47;         /* Deep brown */
+  --light: #f5f1e8;          /* Cream */
+  --dark: #2c2416;           /* Dark brown */
+}
